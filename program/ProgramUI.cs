@@ -55,14 +55,15 @@ namespace Oregon_Trail
 
             PressAnyKey();
 
-            Wagon_Contents wagon_Contents = new Wagon_Contents(true, true, true, true, true, true, 50);
-            string commands = "Deer,GoodRiver,Deer,BadIndians,Deer,GoodRain,Bison,BadRiver,GoodSettlement,Bison,GoodIndians,Deer,Deer,GoodForest,BigStorm,WagonWheelBreak,BadForest,BadSettlement,GoodRiver,Deer,BadMountain,GoodForest,Bear,GoodMountain,Victory";
+            Wagon_Contents wagon_Contents = new Wagon_Contents(true, true, true, true, true, true, 100);
+            string commands = "Deer,GoodRiver,Rabbit,BadIndians,Bison,GoodRain,BadRiver,GoodSettlement,Bear,GoodIndians,Rabbit,Deer,GoodForest,BigStorm,WagonWheelBreak,Bison,BadForest,Rabbit,BadSettlement,GoodRiver,Deer,BadMountain,Bear,GoodForest,GoodMountain,Victory";
             string[] commandArray = commands.Split(',');
 
             foreach (string item in commandArray)
             {
                 if (wagon_Contents.Supplies >= 0)
                 {
+                    Console.WriteLine("\nYou have spent a week on the trail and used 5 supplies.");
                     Console.WriteLine("\nSupplies: " + wagon_Contents.Supplies);
                     Console.WriteLine("Brother is alive: " + wagon_Contents.Brother);
                     Console.WriteLine("Sister is alive: " + wagon_Contents.Sister);
@@ -70,6 +71,7 @@ namespace Oregon_Trail
                     Console.WriteLine("Pa is alive: " + wagon_Contents.Pa);
                     Console.WriteLine("Ox Larry is alive: " + wagon_Contents.OxLarry);
                     Console.WriteLine("Ox Martin is alive: " + wagon_Contents.OxMartin);
+                    wagon_Contents.Supplies -= 5;
                     turnCounter = turnCounter + 1;
                     PressAnyKey();
 
@@ -82,12 +84,30 @@ namespace Oregon_Trail
                         bool hunt = HuntTimeDeer();
                         if (hunt == true)
                         {
-                            Console.WriteLine("You have successfully hunted a deer, and gained 10 supplies.");
-                            wagon_Contents.Supplies += 10;
+                            Console.WriteLine("You have successfully hunted a deer, and gained 15 supplies.");
+                            wagon_Contents.Supplies += 15;
                         }
                         else
                         {
                             Console.WriteLine("You were not able to hunt the deer.");
+                        }
+                        PressAnyKey();
+                    }
+                    else if (item == "Rabbit")
+                    {
+                        Console.Clear();
+
+                        Console.WriteLine("Came across a Rabbit, Time to Hunt!");
+                        Console.ReadKey();
+                        bool hunt = HuntTimeRabbit();
+                        if (hunt == true)
+                        {
+                            Console.WriteLine("You have successfully hunted a rabbit, and gained 5 supplies.");
+                            wagon_Contents.Supplies += 10;
+                        }
+                        else
+                        {
+                            Console.WriteLine("You were not able to hunt the rabbit.");
                         }
                         PressAnyKey();
                     }
@@ -100,8 +120,8 @@ namespace Oregon_Trail
                         bool hunt = HuntTimeBison();
                         if (hunt == true)
                         {
-                            Console.WriteLine("You have successfully hunted a bison, and gained 20 supplies.");
-                            wagon_Contents.Supplies += 20;
+                            Console.WriteLine("You have successfully hunted a bison, and gained 25 supplies.");
+                            wagon_Contents.Supplies += 25;
                         }
                         else
                         {
@@ -142,7 +162,8 @@ namespace Oregon_Trail
                         switch (userInputRiver)
                         {
                             case "1":
-                                Console.WriteLine("The trail has been kind to you, you have made it through the river."); ;
+                                Console.WriteLine("The trail has been kind to you, you have made it through the river.");
+
                                 break;
                             case "2":
                                 Console.WriteLine("You waited and lost 15 supplies, but were able to make it though the river unscathed");
@@ -299,7 +320,7 @@ namespace Oregon_Trail
                                 break;
                             default:
                                 Console.WriteLine("You have entered an invalid input, and have been forced to wait.");
-                                Console.WriteLine("You were able to make it through, but Ma was not able to survive the cold, and Ma died after contracting colera.");
+                                Console.WriteLine("You were able to make it through, but Ma was not able to survive the cold, and died after contracting colera.");
                                 wagon_Contents.Ma = false;
                                 break;
                         }
@@ -350,17 +371,17 @@ namespace Oregon_Trail
                         switch (userInput)
                         {
                             case "1":
-                                Console.WriteLine("You were able to barter with the townspeople, generating 20 supplies for the journey ahead.");
-                                wagon_Contents.Supplies += 20;
+                                Console.WriteLine("The townspeople didn't take kindly to your arrival. The stole 5 supplies from your wagon.");
+                                wagon_Contents.Supplies -= 5;
                                 break;
                             case "2":
-                                Console.WriteLine("You were able to avoid going into the town, but the extra time cost you 10 supplies.");
-                                wagon_Contents.Supplies -= 10;
+                                Console.WriteLine("You were able to avoid going into the town, but the extra time cost you 5 supplies.");
+                                wagon_Contents.Supplies -= 5;
                                 break;
                             default:
-                                Console.WriteLine("You have entered an invalid input, and have been forced to avoid friendly mountain town.");
-                                Console.WriteLine("You were able to avoid going into the town, but the extra time cost you 10 supplies.");
-                                wagon_Contents.Supplies -= 10;
+                                Console.WriteLine("You have entered an invalid input, and have been forced to go into town. The townspeople stole 5 supplies from the wagon.");
+                                Console.WriteLine("You were able to avoid going into the town, but the extra time cost you 5 supplies.");
+                                wagon_Contents.Supplies -= 5;
                                 break;
                         }
                         PressAnyKey();
@@ -446,17 +467,17 @@ namespace Oregon_Trail
                         switch (userInput)
                         {
                             case "1":
-                                Console.WriteLine("The forest was very dense and the trail tough. It takes a while to navigate but, you make it out of the other side. You lose 20 supplies in the forest.");
-                                wagon_Contents.Supplies -= 20;
+                                Console.WriteLine("The forest was very dense and the trail tough. It takes a while to navigate but, you make it out of the other side. You lose 5 supplies in the forest.");
+                                wagon_Contents.Supplies -= 5;
                                 break;
                             case "2":
-                                Console.WriteLine("The trail around the forest was longer than expected. You use 30 supplies going around.");
-                                wagon_Contents.Supplies -= 30;
+                                Console.WriteLine("The trail around the forest was longer than expected. You use 15 supplies going around.");
+                                wagon_Contents.Supplies -= 15;
                                 break;
                             default:
                                 Console.WriteLine("You have entered an invalid input, and have been forced to go around.");
-                                Console.WriteLine("The trail around the forest was longer than expected. You use 30 supplies going around.");
-                                wagon_Contents.Supplies -= 30;
+                                Console.WriteLine("The trail around the forest was longer than expected. You use 15 supplies going around.");
+                                wagon_Contents.Supplies -= 15;
                                 break;
                         }
                         PressAnyKey();
@@ -585,13 +606,13 @@ namespace Oregon_Trail
         }
         public bool HuntTimeBison()
         {
-            Console.WriteLine("Please enter 'snap' in 5 seconds.");
+            Console.WriteLine("Please enter 'snap' in 3 seconds.");
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             string huntInput = Console.ReadLine();
             stopWatch.Stop();
             long huntTime = stopWatch.ElapsedMilliseconds;
-            if (huntInput == "snap" && huntTime <= 5000)
+            if (huntInput == "snap" && huntTime <= 3000)
             {
                 return true;
             }
@@ -609,6 +630,23 @@ namespace Oregon_Trail
             stopWatch.Stop();
             long huntTime = stopWatch.ElapsedMilliseconds;
             if (huntInput == "BaNg" && huntTime <= 5000)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool HuntTimeRabbit()
+        {
+            Console.WriteLine("Please enter 'Trap' in 10 seconds.");
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            string huntInput = Console.ReadLine();
+            stopWatch.Stop();
+            long huntTime = stopWatch.ElapsedMilliseconds;
+            if (huntInput == "Trap" && huntTime <= 10000)
             {
                 return true;
             }
